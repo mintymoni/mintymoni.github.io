@@ -1,2 +1,13 @@
-# mintymoni.github.io
-Interactive portfolio website showcasing my web development projects, academic writing samples, and professional experience as a BS Information Systems student.
+# Portfolio
+
+**Live Site:** https://mintymoni.github.io
+
+## Features
+- Responsive design
+- Animated UI elements
+- Project showcase
+- Academic writing samples
+
+## Contact
+- Email: basiliomonica09@gmail.com
+- GitHub: @mintymoni
