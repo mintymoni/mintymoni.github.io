@@ -1,0 +1,1839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monica Ann V. Basilio | Interactive Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #0a2463;
+            --secondary-blue: #1e3a8a;
+            --accent-blue: #3b82f6;
+            --light-blue: #eff6ff;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --gradient: linear-gradient(135deg, var(--accent-blue) 0%, var(--secondary-blue) 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Animated Background Elements */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-blue), transparent);
+            animation: float 20s infinite linear;
+            opacity: 0.1;
+        }
+        
+        .circle:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+            animation-duration: 25s;
+        }
+        
+        .circle:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 5s;
+            animation-duration: 20s;
+        }
+        
+        .circle:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 10s;
+            animation-duration: 15s;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(50px, 50px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-50px, 50px) rotate(270deg);
+            }
+        }
+        
+        /* Header & Navigation with Animation */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        
+        header.hidden {
+            transform: translateY(-100%);
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .logo span {
+            color: var(--accent-blue);
+        }
+        
+        .logo::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient);
+            bottom: -5px;
+            left: 0;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.5s ease;
+        }
+        
+        .logo:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+            position: relative;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+            display: inline-block;
+        }
+        
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: 0;
+            left: 0;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+        
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+        
+        .hamburger {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary-blue);
+            transition: transform 0.3s;
+        }
+        
+        .hamburger:hover {
+            transform: rotate(90deg);
+        }
+        
+        /* Project Tabs with Animation */
+        .project-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            background-color: var(--light-blue);
+            border-radius: 50px;
+            padding: 10px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-btn {
+            padding: 12px 30px;
+            background-color: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 30px;
+            flex: 1;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+        
+        .tab-btn.active {
+            color: var(--white);
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .tab-btn.active::before {
+            left: 0;
+        }
+        
+        .tab-btn:hover:not(.active) {
+            color: var(--accent-blue);
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: slideUp 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+        
+        /* Hero Section with Enhanced Animation */
+        .hero {
+            padding: 180px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+            z-index: -1;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-text {
+            flex: 1;
+            min-width: 300px;
+            padding-right: 30px;
+            animation: fadeInLeft 1s ease-out;
+        }
+        
+        @keyframes fadeInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .hero-image {
+            flex: 1;
+            min-width: 300px;
+            text-align: center;
+            position: relative;
+            animation: fadeInRight 1s ease-out;
+        }
+        
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        .profile-img-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .profile-img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid var(--white);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            background-color: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-blue);
+            animation: float 6s ease-in-out infinite, pulse 2s ease-in-out infinite;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-img::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: var(--gradient);
+            border-radius: 50%;
+            z-index: -1;
+            animation: rotate 20s linear infinite;
+            opacity: 0.5;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: var(--white);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tagline {
+            font-size: 1.5rem;
+            color: var(--light-blue);
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .description {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-info {
+            margin-top: 25px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            color: var(--white);
+            transition: transform 0.3s;
+        }
+        
+        .contact-item:hover {
+            transform: translateX(10px);
+        }
+        
+        .contact-item i {
+            color: var(--light-blue);
+            margin-right: 10px;
+            width: 20px;
+            font-size: 1.2rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--gradient);
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-view {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 25px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            width: 100%;
+            text-align: center;
+            display: block;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-view::after {
+            content: '→';
+            position: absolute;
+            right: 20px;
+            opacity: 0;
+            transition: all 0.3s;
+        }
+        
+        .btn-view:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(59, 130, 246, 0.3);
+            padding-right: 40px;
+        }
+        
+        .btn-view:hover::after {
+            opacity: 1;
+            right: 15px;
+        }
+        
+        /* Section Styling with Animation */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 15px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 100px;
+            height: 5px;
+            background: var(--gradient);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 5px;
+        }
+        
+        /* Timeline with Animation */
+        .timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: var(--gradient);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-end;
+            padding-right: calc(50% + 30px);
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-start;
+            padding-left: calc(50% + 30px);
+        }
+        
+        .timeline-content {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--gradient);
+        }
+        
+        .timeline-content:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .timeline-content h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+        }
+        
+        .timeline-content .date {
+            color: var(--accent-blue);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background: var(--white);
+            border: 4px solid var(--accent-blue);
+            border-radius: 50%;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        .timeline-item:hover::before {
+            transform: translateX(-50%) scale(1.2);
+            background: var(--accent-blue);
+        }
+        
+        /* Skills with Animation */
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .skill-category {
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+        
+        .skill-category:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .skill-category:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .skill-category h3 {
+            color: var(--primary-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-blue);
+        }
+        
+        .skill-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .skill-tag {
+            background: var(--gradient);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .skill-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .skill-tag:hover::before {
+            left: 100%;
+        }
+        
+        .skill-tag:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        /* Projects with 3D Animation */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+            perspective: 1000px;
+        }
+        
+        .project-card {
+            background-color: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-20px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s;
+        }
+        
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .project-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-img i {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .project-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .project-content h3 {
+            color: var(--primary-blue);
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+        
+        .project-card:hover .project-content h3 {
+            color: var(--accent-blue);
+        }
+        
+        .project-content p {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .project-tech span {
+            background-color: var(--light-blue);
+            color: var(--secondary-blue);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+        }
+        
+        .project-card:hover .project-tech span {
+            background: var(--gradient);
+            color: white;
+        }
+        
+        /* Footer with Animation */
+        footer {
+            background: var(--gradient);
+            color: var(--white);
+            padding: 80px 0 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #FFD700, #FF6B6B, #4ECDC4, #45B7D1);
+            animation: rainbow 10s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 1.2rem;
+        }
+        
+        .social-links a:hover {
+            background-color: white;
+            color: var(--accent-blue);
+            transform: translateY(-5px) rotate(360deg);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+            transition: all 0.3s;
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1) rotate(360deg);
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.6);
+        }
+        
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: var(--gradient);
+            z-index: 1001;
+            transition: width 0.1s;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd),
+            .timeline-item:nth-child(even) {
+                justify-content: flex-start;
+                padding-left: 60px;
+                padding-right: 0;
+            }
+            
+            .timeline-item::before {
+                left: 21px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                flex-direction: column;
+                background-color: var(--white);
+                box-shadow: var(--shadow);
+                transition: left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                padding: 20px 0;
+            }
+            
+            .nav-links.active {
+                left: 0;
+            }
+            
+            .nav-links li {
+                margin: 0;
+                text-align: center;
+                padding: 15px 0;
+            }
+            
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-bottom: 40px;
+            }
+            
+            .contact-item {
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .project-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 80%;
+                margin-bottom: 5px;
+            }
+            
+            .fab {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .profile-img {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .section-title h2 {
+                font-size: 1.6rem;
+            }
+            
+            .timeline-content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+    </div>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+    
+    <!-- Header & Navigation -->
+    <header id="mainHeader">
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">Monica<span>Basilio</span></div>
+                <div class="hamburger" id="hamburger">
+                    <i class="fas fa-bars"></i>
+                </div>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#education"><i class="fas fa-graduation-cap"></i> Education</a></li>
+                    <li><a href="#experience"><i class="fas fa-briefcase"></i> Experience</a></li>
+                    <li><a href="#skills"><i class="fas fa-code"></i> Skills</a></li>
+                    <li><a href="#projects"><i class="fas fa-project-diagram"></i> Projects</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Monica Ann V. Basilio</h1>
+                    <div class="tagline">Web Developer & Academic Writer</div>
+                    <p class="description">
+                        A Bachelor of Science in Information Systems student at Pampanga State University with strong experience in web development and academic writing. Seeking opportunities to apply technical and analytical skills in IT, digital systems, and content development.
+                    </p>
+                    <a href="#projects" class="btn">View My Projects <i class="fas fa-arrow-down"></i></a>
+                    
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Pampanga, Philippines</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>09764116037</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>basiliomonica09@gmail.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fab fa-github"></i>
+                            <span><a href="https://github.com/mintymoni" target="_blank" style="color: white; text-decoration: none;">github.com/mintymoni</a></span>
+                        </div>
+                    </div>
+                </div>
+           <div class="profile-img">
+    <img src="monica.jpg" alt="Monica Ann V. Basilio" 
+         style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Pampanga State University</h3>
+                        <span class="date">(Formerly Don Honorio Ventura State University)</span>
+                        <p>Bachelor of Science in Information Systems</p>
+                        <p><strong><i class="fas fa-star"></i> Current GWA: 1.3</strong></p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Guagua National Colleges</h3>
+                        <span class="date">2023 – 2025</span>
+                        <p>STEM Strand</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>GitHub Portfolio</h3>
+                        <span class="date">2025 - Present</span>
+                        <p><strong><i class="fab fa-github"></i> Username: mintymoni</strong></p>
+                        <p>Check out my coding projects and contributions on GitHub</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-content">
+                        <h3>Freelance Web Developer & Academic Writer</h3>
+                        <span class="date">2024 – Present</span>
+                        <ul>
+                            <li><i class="fas fa-check-circle"></i> Developed and designed responsive websites for clients</li>
+                            <li><i class="fas fa-check-circle"></i> Assisted in thesis writing, research papers, and case studies</li>
+                            <li><i class="fas fa-check-circle"></i> Created structured academic write-ups and technical documentation</li>
+                            <li><i class="fas fa-check-circle"></i> Conducted research, data gathering, and content editing</li>
+                            <li><i class="fas fa-check-circle"></i> Managed multiple client projects with on-time delivery</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-code"></i> Skills</h2>
+            </div>
+            
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3><i class="fas fa-laptop-code"></i> Programming / Web</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                        <span class="skill-tag">JavaScript</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">JAVA</span>
+                        <span class="skill-tag">WordPress</span>
+                        <span class="skill-tag">Weebly</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-tools"></i> Tools</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Canva</span>
+                        <span class="skill-tag">Figma</span>
+                        <span class="skill-tag">MS Office</span>
+                        <span class="skill-tag">GitHub</span>
+                        <span class="skill-tag">Git</span>
+                        <span class="skill-tag">Google Docs</span>
+                        <span class="skill-tag">Google Slides</span>
+                    </div>
+                </div>
+                
+                <div class="skill-category">
+                    <h3><i class="fas fa-brain"></i> Expertise</h3>
+                    <div class="skill-items">
+                        <span class="skill-tag">Web Development</span>
+                        <span class="skill-tag">Research & Academic Writing</span>
+                        <span class="skill-tag">Data Analysis</span>
+                        <span class="skill-tag">Thesis Writing</span>
+                        <span class="skill-tag">Case Study Analysis</span>
+                        <span class="skill-tag">E-commerce Development</span>
+                        <span class="skill-tag">Responsive Design</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <div class="container">
+            <div class="section-title">
+                <h2><i class="fas fa-project-diagram"></i> My Projects</h2>
+            </div>
+            
+            <div class="project-tabs">
+                <button class="tab-btn active" data-tab="academic">
+                    <i class="fas fa-graduation-cap"></i> Academic Projects
+                </button>
+                <button class="tab-btn" data-tab="web">
+                    <i class="fas fa-laptop-code"></i> Web Development Projects
+                </button>
+            </div>
+            
+            <!-- Academic Projects Tab -->
+            <div class="tab-content active" id="academic-tab">
+                <div class="projects-grid">
+                    <!-- Thesis Chapters -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                            <i class="fas fa-file-invoice-dollar"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Chapters 1-2 Thesis Paper</h3>
+                            <div class="project-tech">
+                                <span>Thesis</span>
+                                <span>Research</span>
+                                <span>Data Analysis</span>
+                                <span>2025</span>
+                            </div>
+                            <p>E-Wallet Usage and Consumer Spending Behavior. This study explores how e-wallet usage affects consumer spending habits among Filipinos, analyzing digital financial transaction patterns.</p>
+                            <a href="https://docs.google.com/document/d/1CJrwzSfh46IU04UWTo3blpLSzfDI-9W-3yFWWrEBU_w/edit?usp=sharing" class="btn-view">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Case Analysis -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Case Analysis</h3>
+                            <div class="project-tech">
+                                <span>CSR Analysis</span>
+                                <span>Business</span>
+                                <span>Comparative Study</span>
+                                <span>2025</span>
+                            </div>
+                            <p>CSR Reporting by Chinese and Western MNEs: Patterns Combining Formal Homogenization and Substantive Differences. Examines cultural differences in corporate social responsibility reporting.</p>
+                            <a href="https://docs.google.com/document/d/1PKH6x-V5CpFf5XcL4e72EgxeBMttC9vS/edit?usp=sharing&ouid=108711431773418363467&rtpof=true&sd=true" class="btn-view">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Title Proposal -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Title Proposal</h3>
+                            <div class="project-tech">
+                                <span>Web Development</span>
+                                <span>AI/Chatbot</span>
+                                <span>Student Services</span>
+                                <span>2025</span>
+                            </div>
+                            <p>Development of a Web-Based Chatbot for Student Counseling: Enhancing Accessibility and Support in Academic Institutions. Proposes a chatbot system to improve student counseling services.</p>
+                            <a href="https://docs.google.com/document/d/1VgEJqPq_UmMQjyZMrTfAGHtmQqDpOlqCu8lG6t2X64I/edit?usp=sharing" class="btn-view">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Policy Proposal -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                            <i class="fas fa-scroll"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Policy Proposal</h3>
+                            <div class="project-tech">
+                                <span>Policy Analysis</span>
+                                <span>Research</span>
+                                <span>Recommendations</span>
+                                <span>2025</span>
+                            </div>
+                            <p>Suggests actionable solutions for social/organizational issues. Outlines policy recommendations and anticipated impacts with detailed implementation strategies.</p>
+                            <a href="https://docs.google.com/document/d/1JV7HEF2SaYuOsL3MmT7T4c11TBMhOFqK-C6fgiaI3s4/edit?usp=sharing" class="btn-view">View Details</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Literary Analysis -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Literary Analysis</h3>
+                            <div class="project-tech">
+                                <span>Literature</span>
+                                <span>Critical Analysis</span>
+                                <span>Cultural Studies</span>
+                                <span>2024</span>
+                            </div>
+                            <p>Critically analyzes literary works focusing on themes, writing style, and cultural significance. Interprets meaning and provides insight into authors' intentions and societal contexts.</p>
+                            <a href="https://docs.google.com/document/d/1zjfcdP2N7O28tQJl3pUdQpnnJ8pE7CWW_YuZBWUWopM/edit?usp=sharing" class="btn-view">View Details</a>
+                        </div>
+                    </div>
+                    
+                  <!-- Masters Thesis Chapter 1 -->
+<div class="project-card">
+    <div class="project-img" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+        <i class="fas fa-file-alt"></i>
+    </div>
+    <div class="project-content">
+        <h3>Masters Thesis - Chapter 1</h3>
+        <div class="project-tech">
+            <span>Master's Level</span>
+            <span>Research Design</span>
+            <span>Thesis</span>
+            <span>2024</span>
+        </div>
+        <p>Introduces the research problem, objectives, and scope of the master's thesis. Discusses significance and theoretical background of the study.</p>
+        <!-- ADD YOUR GOOGLE DOCS LINK HERE -->
+        <a href="https://docs.google.com/document/d/1Ci0q9ZWpoj-RByYsILHuaElTbweeWtWLJr-iWL1qiIo/edit?usp=sharing" 
+           target="_blank" 
+           class="btn-view">View Chapter 1</a>
+    </div>
+</div>
+
+<!-- Masters Thesis Chapter 2 -->
+<div class="project-card">
+    <div class="project-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+        <i class="fas fa-search"></i>
+    </div>
+    <div class="project-content">
+        <h3>Masters Thesis - Chapter 2</h3>
+        <div class="project-tech">
+            <span>Literature Review</span>
+            <span>Research Gap</span>
+            <span>Theoretical Framework</span>
+            <span>2024</span>
+        </div>
+        <p>Provides detailed review of related literature and previous studies. Establishes foundation and context for the research project.</p>
+        <!-- ADD YOUR GOOGLE DOCS LINK HERE -->
+        <a href="https://docs.google.com/document/d/1z4i2XFCJUj-dyaeEzigBas8SqvrOIY5f7KsV4eXGr-M/edit?usp=sharing" 
+           target="_blank" 
+           class="btn-view">View Chapter 2</a>
+    </div>
+</div>
+
+<!-- Masters Thesis Chapter 3 -->
+<div class="project-card">
+    <div class="project-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+        <i class="fas fa-chart-bar"></i>
+    </div>
+    <div class="project-content">
+        <h3>Masters Thesis - Chapter 3</h3>
+        <div class="project-tech">
+            <span>Methodology</span>
+            <span>Data Collection</span>
+            <span>Analysis Techniques</span>
+            <span>2024</span>
+        </div>
+        <p>Details the research methodology, data collection procedures, and analysis techniques. Explains how study results were obtained and interpreted.</p>
+        <!-- ADD YOUR GOOGLE DOCS LINK HERE -->
+        <a href="https://docs.google.com/document/d/12OzdquS_sAM4W9ZygRkbFd4r18NAEcWlIxesy5kMYu8/edit?usp=sharing" 
+           target="_blank" 
+           class="btn-view">View Chapter 3</a>
+    </div>
+    </div>
+    <!-- Case Analysis -->
+     <div class="project-card">
+    <div class="project-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+        <i class="fas fa-microchip"></i>
+    </div>
+    <div class="project-content">
+        <h3>Chapter 1: Smart Gardening Automation</h3>
+        <div class="project-tech">
+            <span>Arduino</span>
+            <span>IoT</span>
+            <span>Agriculture</span>
+            <span>2024</span>
+        </div>
+        <p>Smart Gardening Arduino Automation: Enhancing Tomato Plant Growth Through Environmental Control. Introduces automated system for optimal plant conditions.</p>
+        <a href="https://docs.google.com/document/d/174LIv3x25PcFlsvIeVgds2-2X7-TpN23ldhcau4_Fps/edit?usp=sharing" target="_blank" class="btn-view">View Chapter 1</a>
+    </div>
+</div>
+    </div>  
+    </div>
+            <!-- Web Development Projects Tab -->
+            <div class="tab-content" id="web-tab">
+                <div class="projects-grid">
+                    <!-- Tableya Luxe -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Tableya Luxe</h3>
+                            <div class="project-tech">
+                                <span>Weebly</span>
+                                <span>HTML</span>
+                                <span>E-commerce</span>
+                                <span>2024</span>
+                            </div>
+                            <p>A chocolate business website built using Weebly and HTML. Features product listings, add-to-cart system, and secure payment options for easy shopping experience.</p>
+                            <a href="https://tableyaluxee.weebly.com/" target="_blank" class="btn-view">Visit Website</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Valentine's Website -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Valentine's Website</h3>
+                            <div class="project-tech">
+                                <span>HTML</span>
+                                <span>2026</span>
+                            </div>
+                            <p>Created in early January 2026, this interactive website allows users to ask someone to be their Valentine. Features engaging animations and interactive elements.</p>
+                            <a href="https://codepen.io/Basilio-Monica-Ann-V/full/vEKRNZP" target="_blank" class="btn-view">View Project</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Simple Website -->
+                    <div class="project-card">
+                        <div class="project-img" style="background: linear-gradient(135deg, #36d1dc 0%, #5b86e5 100%);">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <div class="project-content">
+                            <h3>Simple Website</h3>
+                            <div class="project-tech">
+                                <span>HTML</span>
+                                <span>CSS</span>
+                                <span>Basic Web Dev</span>
+                                <span>2024</span>
+                            </div>
+                            <p>Built for a student project in 2024, demonstrating fundamentals of web development. Showcases simple navigation, content layout, and basic HTML structure.</p>
+                            <a href="https://github.com/mintymoni/simple-website" target="_blank" class="btn-view">View Code</a>
+                        </div>
+                    </div>
+                    
+                <!-- Add 3 more web projects or leave empty -->
+        <div class="project-card">
+            <div class="project-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <i class="fas fa-plus"></i>
+            </div>
+            <div class="project-content">
+                <h3>Future Web Project</h3>
+                <div class="project-tech">
+                    <span>Coming Soon</span>
+                </div>
+                <p>Working on new web development projects. Check back soon for updates!</p>
+                <a href="#contact" class="btn-view">Contact Me</a>
+            </div>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-img" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                <i class="fas fa-code"></i>
+            </div>
+            <div class="project-content">
+                <h3>Web Project in Progress</h3>
+                <div class="project-tech">
+                    <span>In Development</span>
+                </div>
+                <p>Currently developing new websites and web applications. More projects coming soon!</p>
+                <a href="#contact" class="btn-view">Contact Me</a>
+            </div>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                <i class="fas fa-laptop"></i>
+            </div>
+            <div class="project-content">
+                <h3>More Web Projects</h3>
+                <div class="project-tech">
+                    <span>Upcoming</span>
+                </div>
+                <p>Working on additional web development projects. Stay tuned for more portfolio updates!</p>
+                <a href="#contact" class="btn-view">Contact Me</a>
+            </div>
+        </div>
+    </div>
+</div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Monica Ann V. Basilio</h3>
+                    <p>Web Developer & Academic Writer</p>
+                    <p>Freelancer based in Pampanga, Philippines</p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/share/1HCgoZaD41/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.linkedin.com/in/basilio-monica-ann-v-56bb1a3a6?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BzqHBzBhsTm%2BW8AYzMr4HfQ%3D%3D" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://github.com/mintymoni" target="_blank"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-map-marker-alt"></i> Pampanga, Philippines</p>
+                    <p><i class="fas fa-phone"></i> 09764116037</p>
+                    <p><i class="fas fa-envelope"></i> basiliomonica09@gmail.com</p>
+                    <p><i class="fab fa-github"></i> github.com/mintymoni</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <p><a href="#home" style="color: white;"><i class="fas fa-home"></i> Home</a></p>
+                    <p><a href="#education" style="color: white;"><i class="fas fa-graduation-cap"></i> Education</a></p>
+                    <p><a href="#projects" style="color: white;"><i class="fas fa-project-diagram"></i> Projects</a></p>
+                    <p><a href="#contact" style="color: white;"><i class="fas fa-envelope"></i> Contact</a></p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2024 Monica Ann V. Basilio. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <script>
+        // Enhanced Mobile Navigation Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            hamburger.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+            hamburger.style.transform = navLinks.classList.contains('active') 
+                ? 'rotate(180deg)' 
+                : 'rotate(0deg)';
+        });
+        
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                hamburger.innerHTML = '<i class="fas fa-bars"></i>';
+                hamburger.style.transform = 'rotate(0deg)';
+            });
+        });
+        
+        // Header hide/show on scroll
+        let lastScrollTop = 0;
+        const header = document.getElementById('mainHeader');
+        
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scroll down
+                header.classList.add('hidden');
+            } else {
+                // Scroll up
+                header.classList.remove('hidden');
+            }
+            
+            lastScrollTop = scrollTop;
+            
+            // Update scroll progress bar
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+        });
+        
+        // Project Tabs Functionality with Animation
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Add click animation
+                btn.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    btn.style.transform = '';
+                }, 150);
+                
+                // Remove active class from all buttons and contents
+                tabBtns.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(c => c.classList.remove('active'));
+                
+                // Add active class to clicked button
+                btn.classList.add('active');
+                
+                // Show corresponding tab content with animation
+                const tabId = btn.getAttribute('data-tab');
+                const activeTab = document.getElementById(`${tabId}-tab`);
+                activeTab.classList.add('active');
+                
+                // Animate project cards in the active tab
+                const projectCards = activeTab.querySelectorAll('.project-card');
+                projectCards.forEach((card, index) => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(30px)';
+                    
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, index * 100);
+                });
+            });
+        });
+        
+        // Timeline Animation on Scroll
+        const timelineItems = document.querySelectorAll('.timeline-item');
+        
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        timelineItems.forEach(item => {
+            timelineObserver.observe(item);
+        });
+        
+        // Skills Animation on Hover
+        document.querySelectorAll('.skill-tag').forEach(tag => {
+            tag.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px) scale(1.1)';
+            });
+            
+            tag.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+        
+        // Floating Action Button
+        const fab = document.getElementById('fab');
+        
+        fab.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Show/hide FAB based on scroll position
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                fab.style.opacity = '1';
+                fab.style.visibility = 'visible';
+            } else {
+                fab.style.opacity = '0';
+                fab.style.visibility = 'hidden';
+            }
+        });
+        
+        // Smooth scrolling for anchor links with animation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    const headerHeight = document.querySelector('header').offsetHeight;
+                    const targetPosition = targetElement.offsetTop - headerHeight;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Add active class to nav links on scroll with animation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                const headerHeight = document.querySelector('header').offsetHeight;
+                
+                if (window.scrollY >= (sectionTop - headerHeight - 100)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('active');
+                }
+            });
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.7);
+                transform: scale(0);
+                animation: ripple-animation 0.6s linear;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Typewriter effect for hero section
+        const tagline = document.querySelector('.tagline');
+        const originalText = tagline.textContent;
+        let charIndex = 0;
+        
+        function typeWriter() {
+            if (charIndex < originalText.length) {
+                tagline.textContent = originalText.substring(0, charIndex + 1);
+                charIndex++;
+                setTimeout(typeWriter, 50);
+            }
+        }
+        
+        // Start typewriter effect when page loads
+        window.addEventListener('load', () => {
+            tagline.textContent = '';
+            setTimeout(typeWriter, 1000);
+        });
+        
+        // Animate project cards on page load
+        window.addEventListener('load', () => {
+            const projectCards = document.querySelectorAll('.project-card');
+            projectCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100 + 500);
+            });
+        });
+    </script>
+</body>
+</html>
